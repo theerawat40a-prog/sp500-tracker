@@ -30,8 +30,6 @@ menu = st.sidebar.radio(
     ]
 )
 
-# Sample S&P 500 Top Holdings / List
-DEFAULT_TICKERS = [ 
 # ---------------------------------------------------------
 # Helper Function: Fetch Full S&P 500 List from Wikipedia
 # ---------------------------------------------------------
@@ -48,9 +46,8 @@ def get_sp500_tickers():
     
     return df_clean
 
+# เรียกใช้ฟังก์ชันดึงรายชื่อหุ้นทั้งหมด 500 ตัว
 df_sp500_base = get_sp500_tickers()
-]
-df_sp500_base = pd.DataFrame(DEFAULT_TICKERS)
 
 
 # ---------------------------------------------------------
