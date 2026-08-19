@@ -29,7 +29,7 @@ menu = st.sidebar.radio(
         "5. Valuation & Growth Catalyst Calc"
     ]
 )
-
+import requests
 # ---------------------------------------------------------
 # Helper Function: Fetch Full S&P 500 List from Wikipedia
 # ---------------------------------------------------------
