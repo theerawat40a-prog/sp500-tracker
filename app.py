@@ -32,18 +32,23 @@ menu = st.sidebar.radio(
 
 # Sample S&P 500 Top Holdings / List
 DEFAULT_TICKERS = [
-    {"Symbol": "AAPL", "Company": "Apple Inc.", "Sector": "Information Technology", "CIK": "0000320193"},
-    {"Symbol": "MSFT", "Company": "Microsoft Corp.", "Sector": "Information Technology", "CIK": "0000789019"},
-    {"Symbol": "NVDA", "Company": "NVIDIA Corp.", "Sector": "Information Technology", "CIK": "0001045810"},
-    {"Symbol": "AMZN", "Company": "Amazon.com Inc.", "Sector": "Consumer Discretionary", "CIK": "0001018724"},
-    {"Symbol": "GOOGL", "Company": "Alphabet Inc.", "Sector": "Communication Services", "CIK": "0001652044"},
-    {"Symbol": "META", "Company": "Meta Platforms", "Sector": "Communication Services", "CIK": "0001326801"},
-    {"Symbol": "BRK-B", "Company": "Berkshire Hathaway", "Sector": "Financials", "CIK": "0001067983"},
-    {"Symbol": "JPM", "Company": "JPMorgan Chase & Co.", "Sector": "Financials", "CIK": "0000019617"},
-    {"Symbol": "XOM", "Company": "Exxon Mobil Corp.", "Sector": "Energy", "CIK": "0000034088"},
-    {"Symbol": "JNJ", "Company": "Johnson & Johnson", "Sector": "Health Care", "CIK": "0000200406"},
-    {"Symbol": "UNH", "Company": "UnitedHealth Group", "Sector": "Health Care", "CIK": "0000731766"},
-    {"Symbol": "PG", "Company": "Procter & Gamble", "Sector": "Consumer Staples", "CIK": "0000080667"},
+  # ---------------------------------------------------------
+# Helper Function: Fetch Full S&P 500 List from Wikipedia
+# ---------------------------------------------------------
+@st.cache_data(ttl=86400)
+def get_sp500_tickers():
+    url = 'https://en.wikipedia.org/wiki/List_of_S%26P_500_companies'
+    tables = pd.read_html(url)
+    df = tables[0]
+    
+    df_clean = df[['Symbol', 'Security', 'GICS Sector', 'CIK']].copy()
+    df_clean.columns = ['Symbol', 'Company', 'Sector', 'CIK']
+    df_clean['CIK'] = df_clean['CIK'].astype(str).str.zfill(10)
+    df_clean['Symbol'] = df_clean['Symbol'].str.replace('.', '-', regex=False)
+    
+    return df_clean
+
+df_sp500_base = get_sp500_tickers()
 ]
 df_sp500_base = pd.DataFrame(DEFAULT_TICKERS)
 
