@@ -31,8 +31,8 @@ menu = st.sidebar.radio(
 )
 
 # Sample S&P 500 Top Holdings / List
-DEFAULT_TICKERS = [
-  # ---------------------------------------------------------
+DEFAULT_TICKERS = [ 
+# ---------------------------------------------------------
 # Helper Function: Fetch Full S&P 500 List from Wikipedia
 # ---------------------------------------------------------
 @st.cache_data(ttl=86400)
